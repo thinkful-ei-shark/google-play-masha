@@ -21,10 +21,16 @@ app.get('/apps', (req, res) => {
       .status(400)
       .json({ message: 'genres must be one of "Action", "Puzzle", "Strategy", "Casual", "Arcade", or "Card"' });
   }
-  if(sort) {
-    playStore.sort((a, b) => a[sort] > b[sort] ? -1 : 1);
+
+  let data = playStore;
+  if (sort) {
+    data.sort((a, b) => a[sort] > b[sort] ? -1 : 1);
   }
-  return res.json(playStore);
+  if (genres) {
+    data = playStore.filter(game => game.Genres === genres);
+  }
+
+  return res.json(data);
 });
 
 app.listen(8080, () => console.log('Server on 8080'));
