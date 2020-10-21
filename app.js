@@ -8,6 +8,12 @@ app.use(morgan('common'));
 
 app.get('/apps', (req, res) => {
   const { sort, genres } = req.query;
+  let badParams = false;
+  Object.keys(req.query).forEach(q => 
+    {
+      if(!['sort','genres'].includes(q)) badParams = true
+    })
+    if(badParams) return res.status(400).json({message: 'params must be sort or genres'})
   if (!sort && !genres) return res.json(playStore);
   if (sort && !['Rating', 'App'].includes(sort)) {
     return res
