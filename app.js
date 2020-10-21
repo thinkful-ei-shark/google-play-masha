@@ -33,4 +33,4 @@ app.get('/apps', (req, res) => {
   return res.json(data);
 });
 
-app.listen(8080, () => console.log('Server on 8080'));
+module.exports = app;
